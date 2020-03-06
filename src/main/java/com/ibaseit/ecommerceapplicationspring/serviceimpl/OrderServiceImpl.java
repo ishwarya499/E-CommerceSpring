@@ -1,6 +1,7 @@
 package com.ibaseit.ecommerceapplicationspring.serviceimpl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -106,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		if (criteriaDTO.getStartDate() != null && criteriaDTO.getEndDate() != null) {
 			Expression<Date> dateEntryPath = rootOrder_.get("createdDate");
-			Predicate createdDatePredicate = criteriaBuilder.between(dateEntryPath, criteriaDTO.getStartDate(), criteriaDTO.getEndDate());
+			Predicate createdDatePredicate = criteriaBuilder.between(dateEntryPath, minusMinutes(criteriaDTO.getStartDate(), 330), minusMinutes(criteriaDTO.getEndDate(), 330));
 			predicates.add(createdDatePredicate);
 		}
 
@@ -123,5 +124,16 @@ public class OrderServiceImpl implements OrderService {
 		return typedQuery.getResultList();
 
 	}
+	
+	public Date minusMinutes(Date date, int minutes) {
+		if (date == null) {
+			return null;
+		}
+		Calendar calender = Calendar.getInstance();
+		calender.setTime(date);
+		calender.set(Calendar.MINUTE, calender.get(Calendar.MINUTE) - minutes);
+		return calender.getTime();
+	}
+
 
 }
