@@ -1,5 +1,6 @@
 package com.ibaseit.ecommerceapplicationspring.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,7 +14,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.springframework.data.annotation.CreatedDate;
+
+import lombok.Data;
+@Data
 @Entity
 @Table(name = "Order_tbl")
 public class Order {
@@ -25,9 +32,7 @@ public class Order {
 	@JoinTable(name = "order_products", joinColumns = { @JoinColumn(name = "orderId") }, inverseJoinColumns = {
 			@JoinColumn(name = "productId") })
 	List<Product> products;
-	
-	
-	
+
 	@Column(name = "priceof_products")
 	private double totalPrice;
 
@@ -35,40 +40,10 @@ public class Order {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
 
-	public User getUser() {
-		return user;
-	}
+	@CreatedDate
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date")
+	private Date createdDate;
 
-	public long getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(long orderId) {
-		this.orderId = orderId;
-	}
-
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
-	public double getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	
-
-	
 
 }
