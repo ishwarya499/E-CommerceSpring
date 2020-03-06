@@ -1,0 +1,43 @@
+
+server:
+  port: 8086
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://ibasesqldb:3306/practice_ishwarya 
+    password: 1Base1t
+    username: root
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+  mail:
+     host: smtp.gmail.com  
+     port: 25
+     username: ishwaryabtech15@gmail.com
+     password: ishwarya1998
+     properties:
+        mail:
+          debug: true
+          transport.protocol: smtp
+          smtp:
+            auth: true
+            connectiontimeout: 5000
+            timeout: 5000
+            writetimeout: 5000
+            starttls:
+                enable: true
+            
+            
+            
+            
+          
+
+
+
+
+
+
