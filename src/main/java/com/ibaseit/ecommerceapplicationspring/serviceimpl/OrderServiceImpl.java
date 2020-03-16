@@ -66,27 +66,27 @@ public class OrderServiceImpl implements OrderService {
 		return repository.findByUser_UserId(userId);
 
 	}
-
+	@Override
 	public List<Order> searchOrder(OrderSearchDTO criteriaDTO) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
 		Root<Order> rootOrder_ = criteriaQuery.from(Order.class);
 		Join<Order, Product> rootProduct = rootOrder_.join("products", JoinType.INNER);
-		List<Predicate> predicates = new ArrayList<Predicate>();
+		List<Predicate> predicates = new ArrayList<>();
 
-		if (criteriaDTO.getNameofProduct() != null && criteriaDTO.getNameofProduct() != "") {
+		if (criteriaDTO.getNameofProduct() != null && !criteriaDTO.getNameofProduct().isEmpty()) {
 
 			Expression<String> productNamePath = rootProduct.get("nameofProduct");
 			Predicate statusNamePredicte = criteriaBuilder.equal(productNamePath, criteriaDTO.getNameofProduct());
 			predicates.add(statusNamePredicte);
 		}
-		if (criteriaDTO.getTypeOfProduct() != null && criteriaDTO.getTypeOfProduct() != "") {
+		if (criteriaDTO.getTypeOfProduct() != null && !criteriaDTO.getTypeOfProduct().isEmpty()) {
 
 			Expression<String> productTypePath = rootProduct.get("typeOfProduct");
 			Predicate statusTypePredicte = criteriaBuilder.like(productTypePath, criteriaDTO.getTypeOfProduct());
 			predicates.add(statusTypePredicte);
 
-		}
+		} 
 		if (criteriaDTO.getProductId() != 0) {
 
 			Expression<Long> productIdPath = rootProduct.get("productId");
@@ -113,7 +113,8 @@ public class OrderServiceImpl implements OrderService {
 
 		if (predicates.isEmpty()) {
 			return new ArrayList<>();
-		}
+			
+			}
 
 		criteriaQuery.where(predicates.stream().toArray(size -> new Predicate[size]));
 

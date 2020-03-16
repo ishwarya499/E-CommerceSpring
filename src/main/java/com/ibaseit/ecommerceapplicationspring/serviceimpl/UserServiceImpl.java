@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	UserRepository repository;
 	
 	public User getUserDetails(long userId) throws Exception {
-		return (repository.findById(userId)).get();
+		return repository.findByUserId(userId);
 	}
 
 	public int saveUser(User user) throws Exception {
